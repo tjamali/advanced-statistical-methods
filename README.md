@@ -17,13 +17,13 @@ Fourier filtering method, the empirical mode decomposition (EMD) method, and the
 (SVD) technique. Here we use SVD because, comparing with the other two techniques, it reduces both periodic
 and quasiperiodic trends in series with more than one peak in their power spectrums.
 
-Our following paper represents an application of SVD together with MF-DFA for analysing nanofriction data in order extract multi-scaling behavior in nanofriction https://doi.org/10.1103/PhysRevE.95.062802
+Our following paper represents an application of SVD together with MF-DFA for analysing nanofriction data in order extract multiscaling behavior of the data https://doi.org/10.1103/PhysRevE.95.062802
 
 Every matrix *M* can be seen as a linear transformation. It is shown that this transformation can be decomposed
 in three sub-transformations (using three another matrices *U*, <img src="https://latex.codecogs.com/svg.latex?\Sigma" />
 , and <img src="https://latex.codecogs.com/svg.latex?V^*" />
 ): 1. rotation, 2. re-scaling,
-3. rotation (See https://en.wikipedia.org/wiki/Singular_value_decomposition for more details. The follwoing figure is from wiki too.).
+3. rotation (See https://en.wikipedia.org/wiki/Singular_value_decomposition for more details. The follwoing figure is from wiki too.)
 
 <p align="center">
   <img width="600" height="540" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Singular-Value-Decomposition.svg/800px-Singular-Value-Decomposition.svg.png">
