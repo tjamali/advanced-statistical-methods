@@ -23,8 +23,10 @@ Every matrix *M* can be seen as a linear transformation. It is shown that this t
 in three sub-transformations (using three another matrices *U*, <img src="https://latex.codecogs.com/svg.latex?\Sigma" />
 , and <img src="https://latex.codecogs.com/svg.latex?V^*" />
 ): 1. rotation, 2. re-scaling,
-3. rotation (See https://en.wikipedia.org/wiki/Singular_value_decomposition for more details. The follwoing figure is from wiki too.)
+3. rotation (See this Wikipedia [page](https://en.wikipedia.org/wiki/Singular_value_decomposition) for more details. The follwoing figure is also from that page.)
 
 <p align="center">
   <img width="600" height="540" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Singular-Value-Decomposition.svg/800px-Singular-Value-Decomposition.svg.png">
 </p>
+
+**The python code shows the details of computing SVD**
