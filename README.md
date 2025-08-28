@@ -1,19 +1,48 @@
-# Statistical Methods: Singular Value Decomposition
+# Statistical Methods: Singular Value Decomposition (SVD)
 
 ## Application to Detrending Time Series
 
-Identifying and removing trends appropriately is essential for robust time series analysis. “Trend” is not uniquely defined, so any effective detrending algorithm must suppress embedded trends while preserving intrinsic fluctuations as much as possible. Real-world data complicate this balance, especially when periodic components are present.
+In time series analysis, identifying and removing trends is essential for uncovering the underlying scaling behavior. However, “trend” is not uniquely defined, and real-world data often mix deterministic trends with stochastic fluctuations and periodic components.
 
-It has been shown that Multifractal Detrended Fluctuation Analysis (MF-DFA) fails to fully remove intrinsic periodic trends. When applied to data containing sinusoidal components, MF-DFA produces spurious crossovers in the fluctuation function plot. A periodic trend induces an artificial crossover at the scale of that periodicity, which undermines reliable estimation of the scaling exponent. Therefore, to obtain accurate scaling exponents, such trends must be attenuated before applying MF-DFA.
+One well-known method, **Multifractal Detrended Fluctuation Analysis (MF-DFA)**, is powerful but not foolproof: it struggles with intrinsic periodicities. When sinusoidal components are present, MF-DFA produces *spurious crossovers* in the fluctuation function, leading to unreliable scaling exponents.
+👉 To fix this, trends and periodic components must be attenuated before applying MF-DFA.
 
-Several preprocessing methods have been proposed for this purpose, including Fourier filtering, Empirical Mode Decomposition (EMD), and Singular Value Decomposition (SVD). Here we use SVD because, compared to the other two, it more effectively reduces both periodic and quasi-periodic trends in series that exhibit multiple peaks in their power spectra.
+### Why SVD?
 
-This work (see https://doi.org/10.1103/PhysRevE.95.062802) applies SVD in conjunction with MF-DFA to analyze nanofriction data and extract its multiscaling behavior.
+Several preprocessing methods exist (Fourier filtering, EMD, etc.). I use **Singular Value Decomposition (SVD)** because:
 
-Every matrix \( M \) represents a linear transformation. This transformation can be decomposed into three components via SVD: two rotations and a rescaling, using matrices \( U \), \( \Sigma \), and \( V^* \). (See the Wikipedia page on [Singular Value Decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) for details. The figure below is adapted from that page.)
+* It suppresses both periodic and quasi-periodic trends.
+* It handles signals with multiple peaks in the power spectrum better than alternatives.
+* It provides a clear separation between dominant structured components (large singular values) and stochastic fluctuations (smaller singular values).
+
+Following the approach in [Xu et al., Phys. Rev. E 95, 062802 (2017)](https://doi.org/10.1103/PhysRevE.95.062802), I combine **SVD preprocessing with MF-DFA** to extract reliable multiscaling behavior in nanofriction data.
+
+### How SVD Works (Intuition)
+
+Every matrix $M$ can be decomposed into:
+
+$$
+M = U \Sigma V^*
+$$
+
+where $U$ and $V$ are rotations, and $\Sigma$ contains the singular values (rescaling factors).
+
+* Large singular values → dominant patterns (often trends/periodicities).
+* Smaller singular values → noise and fine-scale fluctuations.
+
+By reconstructing the signal with only selected components, we filter out unwanted trends.
 
 <p align="center">
-  <img width="600" height="540" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Singular-Value-Decomposition.svg/800px-Singular-Value-Decomposition.svg.png" alt="SVD decomposition illustration">
+  <img width="500" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Singular-Value-Decomposition.svg/800px-Singular-Value-Decomposition.svg.png" alt="SVD decomposition illustration">
 </p>
 
-**The notebook code provides the implementation details for computing the SVD.**
+### Implementation
+
+I provide [notebook code in this repo](./notebooks/svd_detrending.ipynb) to demonstrate:
+
+1. Computing the SVD.
+2. Removing periodic components from synthetic and experimental signals.
+3. Applying MF-DFA on the detrended series.
+
+**Practical Insight:**
+In my experiments, reconstructing the time series while omitting the top singular components effectively removes periodicities, yielding clean fluctuation functions without artificial crossovers.
