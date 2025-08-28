@@ -1,4 +1,4 @@
-# Statistical Methods: Singular Value Decomposition (SVD)
+# Singular Value Decomposition (SVD)
 
 ## Application to Detrending Time Series
 
